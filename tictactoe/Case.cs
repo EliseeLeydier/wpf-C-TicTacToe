@@ -32,17 +32,61 @@ namespace tictactoe
         }
 
 
-        private void reset()
+        public void reset()
         {
             foreach (Button button in gridInstance.Children.OfType<Button>())
             {
+                button.Background = new System.Windows.Media.SolidColorBrush(System.Windows.Media.Colors.White);
                 button.Content = "";
             }
             grille = new string[3, 3] { { "", "", "" }, { "", "", "" }, { "", "", "" } };
 
         }
 
-        public bool verifier()
+        private void column()
+        {
+            foreach (Button button in gridInstance.Children.OfType<Button>())
+            {
+                if (Grid.GetColumn(button) == Grid.GetColumn(bt))
+                {
+                    button.Background = new System.Windows.Media.SolidColorBrush(System.Windows.Media.Colors.Red);
+
+                }
+            }
+        }
+        private void row()
+        {
+            foreach (Button button in gridInstance.Children.OfType<Button>())
+            {
+                if (Grid.GetRow(button) == Grid.GetRow(bt))
+                {
+                    button.Background = new System.Windows.Media.SolidColorBrush(System.Windows.Media.Colors.Red);
+
+                }
+            }
+        }
+        private void diag()
+        {
+            foreach (Button button in gridInstance.Children.OfType<Button>())
+            {
+                if (Grid.GetRow(button) == Grid.GetColumn(button))
+                {
+                    button.Background = new System.Windows.Media.SolidColorBrush(System.Windows.Media.Colors.Red);
+                }
+            }
+        }
+        private void antiDiag()
+        {
+            foreach (Button button in gridInstance.Children.OfType<Button>())
+            {
+                if (Grid.GetRow(button) + Grid.GetColumn(button) == 2)
+                {
+                    button.Background = new System.Windows.Media.SolidColorBrush(System.Windows.Media.Colors.Red);
+                }
+            }
+        }
+
+        public void verifier()
         {
             int row = Grid.GetRow(bt);
             int column = Grid.GetColumn(bt);
@@ -79,15 +123,32 @@ namespace tictactoe
                     CompteurAntiDiag += 1;
                 }
             }
-
-            //MessageBox.Show(CompteurColumn.ToString() + CompteurDiag.ToString() + CompteurAntiDiag.ToString());
-            if (CompteurColumn == 3 || CompteurRow == 3 || CompteurDiag == 3 || CompteurAntiDiag == 3)
+            if (CompteurColumn == 3)
             {
+                this.column();
                 MessageBox.Show(player + " a gagné ");
                 reset();
-                return true;
             }
-            return false;
+            else if (CompteurRow == 3)
+            {
+                this.row();
+                MessageBox.Show(player + " a gagné ");
+                reset();
+
+            }
+            else if (CompteurDiag == 3)
+            {
+                this.diag();
+                MessageBox.Show(player + " a gagné ");
+                reset();
+
+            }
+            else if (CompteurAntiDiag == 3)
+            {
+                this.antiDiag();
+                MessageBox.Show(player + " a gagné ");
+                reset();
+            }
         }
     }
 }
