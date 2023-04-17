@@ -1,1 +1,1 @@
-# wpf-C-TicTacToe
+# wpf-C#-TicTacToe
